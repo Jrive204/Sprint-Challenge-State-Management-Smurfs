@@ -18,8 +18,14 @@
   },
   "homepage": "https://github.com/LambdaSchool/Sprint-Challenge--Redux#readme",
   "dependencies": {
+    "@bootstrap-styled/v4": "^3.3.0",
+    "bootstrap-styled": "^2.7.2",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-loader": "^2.4.6",
+    "react-loader-spinner": "^3.1.5",
+    "rebass": "^4.0.7",
+    "styled-components": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
