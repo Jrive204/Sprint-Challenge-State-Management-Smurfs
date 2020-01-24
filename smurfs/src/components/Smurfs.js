@@ -7,8 +7,8 @@ const Smurfs = props => {
       <Card width='15rem'>
         <CardBlock>
           <CardTitle>{props.smurf.name}</CardTitle>
-          <CardText>{props.smurf.age}</CardText>
-          <CardText>{props.smurf.height} </CardText>
+          <CardText>age: {props.smurf.age}</CardText>
+          <CardText>height: {props.smurf.height} </CardText>
         </CardBlock>
       </Card>
     </div>
