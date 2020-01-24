@@ -44,7 +44,7 @@ export const reducer = (state = initialstate, action) => {
       return {
         ...state,
         isloading: false,
-        smurfs: [...state.smurfs, action.payload]
+        smurfs: action.payload
       };
     case POSTING_DATA_FAILURE:
       return {

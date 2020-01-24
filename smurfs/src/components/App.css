@@ -22,7 +22,9 @@
   font-size: large;
 }
 
-.card-block {
-  
+.smurfs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 0 auto;
 }
-

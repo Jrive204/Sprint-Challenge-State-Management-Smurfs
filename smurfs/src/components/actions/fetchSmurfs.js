@@ -31,7 +31,28 @@ export const sendSmurfs = smurf => dispatch => {
     )
     .then(res => {
       console.log(res, "smurf data");
-      dispatch({ type: POSTING_DATA_SUCCESS, payload: res.data });
+      setTimeout(() => {
+        dispatch({ type: POSTING_DATA_SUCCESS, payload: res.data });
+      }, 2500);
+    })
+    .catch(err => {
+      dispatch({ type: POSTING_DATA_FAILURE, payload: err.response });
+    });
+};
+
+export const editSmurfs = (smurf, id) => dispatch => {
+  dispatch({ type: POSTING_DATA_START });
+  axios
+    .put(
+      `http://localhost:3333/smurfs/${id}`,
+      smurf
+      //   id: Date.now()
+    )
+    .then(res => {
+      console.log(res, "smurf data");
+      setTimeout(() => {
+        dispatch({ type: POSTING_DATA_SUCCESS, payload: res.data });
+      }, 2500);
     })
     .catch(err => {
       dispatch({ type: POSTING_DATA_FAILURE, payload: err.response });
