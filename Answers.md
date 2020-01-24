@@ -18,4 +18,4 @@ redux-thunk allows asnyc call to be made in order to use redux to fetch data. I 
 
 1. What is your favorite state management system you've learned and this sprint? Please explain why!
 
-I prefer Redux with hooks, its as simple to use as context and reducer but can do alot more especially with the use of middleware.
+I prefer Redux with hooks, its as simple to use as context and reducer but can do a lot more especially with the use of middleware.
