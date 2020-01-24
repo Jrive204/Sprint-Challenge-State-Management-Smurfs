@@ -1,6 +1,6 @@
-export const FETCHING_ACTIVITY_START = "FETCHING_ACTIVITY_START";
-export const FETCHING_ACTIVITY_SUCCESS = "FETCHING_ACTIVITY_SUCCESS";
-export const FETCHING_ACTIVITY_FAILURE = "FETCHING_ACTIVITY_FAILURE";
+export const FETCHING_DATA_START = "FETCHING_DATA_START";
+export const FETCHING_DATA_SUCCESS = "FETCHING_DATA_SUCCESS";
+export const FETCHING_DATA_FAILURE = "FETCHING_DATA_FAILURE";
 
 const initialstate = {
   isloading: false,
@@ -10,20 +10,20 @@ const initialstate = {
 
 export const reducer = (state = initialstate, action) => {
   switch (action.type) {
-    case FETCHING_ACTIVITY_START:
+    case FETCHING_DATA_START:
       return {
         ...state,
         isloading: true
       };
 
-    case FETCHING_ACTIVITY_SUCCESS:
+    case FETCHING_DATA_SUCCESS:
       return {
         ...state,
         isloading: false,
         smurfs: action.payload
       };
 
-    case FETCHING_ACTIVITY_FAILURE:
+    case FETCHING_DATA_FAILURE:
       return {
         ...state,
         isloading: false,
