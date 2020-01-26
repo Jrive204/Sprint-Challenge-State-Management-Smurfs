@@ -1,48 +1,73 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Label, Button, FormGroup } from "@bootstrap-styled/v4";
 import { useDispatch, useSelector } from "react-redux";
-import { sendSmurfs, editSmurfs } from "./actions/fetchSmurfs";
+import { sendSmurfs, editSmurfs, killSmurfs } from "./actions/fetchSmurfs";
+import { EDITING_STATE, FORM_STATE } from "./reducers";
 
 const SmurfForm = () => {
-  const [smurf, setSmurf] = useState({
-    name: "",
-    age: 0,
-    height: "",
-    id: 0
-  });
-  const [editing, setEditing] = useState(false);
+  const smurf = useSelector(state => state.smurf);
+  //   const [smurf, setSmurf] = useState({
+  //     name: "",
+  //     age: 0,
+  //     height: "",
+  //     id: 0
+  //   });
 
   const checkname = useSelector(state => state.smurfs);
+  const editing = useSelector(state => state.editing);
   const dispatch = useDispatch();
+  let doesIdExist = checkname.map(ele => ele.id);
+  let doesnameExist = checkname.map(ele => ele.name);
 
   const handlechange = e => {
-    setSmurf({ ...smurf, [e.target.name]: e.target.value });
+    // setSmurf({ ...smurf, [e.target.name]: e.target.value });
+    dispatch({ type: FORM_STATE, name: e.target.name, value: e.target.value });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    let doesnameExist = checkname.map(ele => ele.name);
-    console.log(doesnameExist, "name");
-    console.log(smurf.name, "the check");
 
     if (doesnameExist.includes(smurf.name)) {
       return alert("Name already exist");
     } else {
       return (
         dispatch(sendSmurfs(smurf)) &
-        setSmurf({ name: "", age: "", height: "" }) &
+        // setSmurf({ name: "", age: "", height: "" }) &
         document.getElementById("bigForm").reset()
       );
     }
   };
 
   const handleformEdit = e => {
-    return (
-      e.preventDefault() &
-      dispatch(editSmurfs(smurf, smurf.id)) &
-      document.getElementById("editForm").reset() &
-      setEditing(false)
-    );
+    e.preventDefault();
+
+    console.log(doesIdExist.includes(Number(smurf.id)), "INCLUDES TEST ID");
+
+    if (doesIdExist.includes(Number(smurf.id)) === true) {
+      return (
+        dispatch(editSmurfs(smurf, smurf.id)) &
+        document.getElementById("editForm").reset() &
+        dispatch({ type: EDITING_STATE })
+      );
+    } else {
+      return alert("ID Doesnt exist, please try again");
+    }
+  };
+
+  const handleformDelete = e => {
+    e.preventDefault();
+
+    console.log(doesIdExist.includes(Number(smurf.id)), "INCLUDES TEST ID");
+
+    if (doesIdExist.includes(Number(smurf.id)) === true) {
+      return (
+        dispatch(killSmurfs(smurf, smurf.id)) &
+        document.getElementById("editForm").reset() &
+        dispatch({ type: EDITING_STATE })
+      );
+    } else {
+      return alert("ID Doesnt exist, please try again");
+    }
   };
 
   return (
@@ -53,6 +78,7 @@ const SmurfForm = () => {
             <Label hidden>
               Smurf name: &nbsp;
               {console.log(smurf, "smurf")}
+              {/* {console.log(testsmurf, "testSmurf")} */}
               <Input
                 required
                 minLength='2'
@@ -67,7 +93,9 @@ const SmurfForm = () => {
             <Label hidden>
               Smurf age: &nbsp; &nbsp; &nbsp;
               <Input
-                type='text'
+                required
+                minLength='1'
+                type='number'
                 name='age'
                 onChange={handlechange}
                 placeholder='Smurf age'
@@ -78,6 +106,8 @@ const SmurfForm = () => {
             <Label hidden>
               Smurf height: &nbsp;
               <Input
+                required
+                minLength='1'
                 type='text'
                 name='height'
                 onChange={handlechange}
@@ -86,7 +116,9 @@ const SmurfForm = () => {
             </Label>
           </FormGroup>
           <Button type='submit'>Submit</Button>
-          <Button color='warning' onClick={() => setEditing(true)}>
+          <Button
+            color='warning'
+            onClick={() => dispatch({ type: EDITING_STATE })}>
             EDIT
           </Button>
         </Form>
@@ -110,7 +142,7 @@ const SmurfForm = () => {
             <Label hidden>
               Smurf age: &nbsp; &nbsp; &nbsp;
               <Input
-                type='text'
+                type='number'
                 name='age'
                 onChange={handlechange}
                 placeholder='Smurf age'
@@ -132,19 +164,25 @@ const SmurfForm = () => {
             <Label hidden>
               Smurf ID: &nbsp;
               <Input
+                style={{ width: "25%" }}
                 required
                 minLength='1'
                 type='number'
                 name='id'
                 onChange={handlechange}
-                placeholder='Smurf ID'
+                placeholder='ID'
               />
             </Label>
           </FormGroup>
+          <Button color='danger' onClick={handleformDelete}>
+            Delete
+          </Button>
           <Button type='submit' onClick={handleformEdit}>
             Submit
           </Button>
-          <Button color='warning' onClick={() => setEditing(false)}>
+          <Button
+            color='warning'
+            onClick={() => dispatch({ type: EDITING_STATE })}>
             Cancel
           </Button>
         </Form>
@@ -152,6 +190,5 @@ const SmurfForm = () => {
     </div>
   );
 };
-//         <Button color='warning' onClick={() => dispatch(editSmurfs(smurf, smurf.id))}>
 
 export default SmurfForm;

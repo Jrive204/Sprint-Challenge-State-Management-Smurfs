@@ -1,59 +1,64 @@
-export const FETCHING_DATA_START = "FETCHING_DATA_START";
-export const FETCHING_DATA_SUCCESS = "FETCHING_DATA_SUCCESS";
-export const FETCHING_DATA_FAILURE = "FETCHING_DATA_FAILURE";
-
-export const POSTING_DATA_START = "POSTING_DATA_START";
-export const POSTING_DATA_SUCCESS = "POSTING_DATA_SUCCESS";
-export const POSTING_DATA_FAILURE = "POSTING_DATA_FAILURE";
+export const DATA_START = "FETCHING_DATA_START";
+export const DATA_SUCCESS = "FETCHING_DATA_SUCCESS";
+export const DATA_FAILURE = "FETCHING_DATA_FAILURE";
+export const EDITING_STATE = "EDITING_STATE";
+export const FORM_STATE = "FORM_STATE";
 
 const initialstate = {
   isloading: false,
   smurfs: [],
-  error: ""
+  error: "",
+  editing: false,
+  smurf: {
+    name: "",
+    age: 0,
+    height: "",
+    id: 0
+  }
 };
 
 export const reducer = (state = initialstate, action) => {
   switch (action.type) {
-    case FETCHING_DATA_START:
+    case DATA_START:
       return {
         ...state,
         isloading: true
       };
 
-    case FETCHING_DATA_SUCCESS:
+    case DATA_SUCCESS:
       return {
         ...state,
         isloading: false,
         smurfs: action.payload
       };
 
-    case FETCHING_DATA_FAILURE:
+    case DATA_FAILURE:
       return {
         ...state,
         isloading: false,
         smurfs: action.payload
       };
-    //POSTING DATA STARTS HERE
 
-    case POSTING_DATA_START:
+    case EDITING_STATE:
       return {
         ...state,
-        isloading: true
+        editing: !state.editing
       };
-    case POSTING_DATA_SUCCESS:
+
+    case FORM_STATE: {
       return {
         ...state,
-        isloading: false,
-        smurfs: action.payload
+        smurf: {
+          ...state.smurf,
+          [action.name]: action.value
+        }
       };
-    case POSTING_DATA_FAILURE:
-      return {
-        ...state,
-        isloading: false,
-        smurfs: action.payload
-      };
+    }
 
     default:
       return state;
   }
 };
+
+
+

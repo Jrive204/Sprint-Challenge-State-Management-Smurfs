@@ -24,11 +24,12 @@ const SmurfGrid = () => {
           timeout={3000} //3 secs
         />
       )}
+      {console.log(state.editing, "edit")}
 
       {state.smurfs && !state.isloading && (
         <div className='smurfs'>
           {state.smurfs.map(smurf => (
-            <Smurfs key={smurf.id} smurf={smurf} />
+            <Smurfs key={smurf.id} smurf={smurf} state={state} />
           ))}
         </div>
       )}

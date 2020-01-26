@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: sans-serif;
 }
 
 .App-logo {
@@ -24,7 +25,17 @@
 
 .smurfs {
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   width: 80%;
   margin: 0 auto;
+}
+
+button {
+  margin-left: 0.2%;
+  margin-right: 0.2%;
+}
+
+::placeholder {
+  text-align: center;
 }
